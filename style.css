@@ -1,0 +1,484 @@
+/* =========================================================
+   Currículo – estilo baseado na referência (grid editorial,
+   preto + off-white + azul-violeta como acento)
+   ========================================================= */
+
+:root {
+  --fundo: #f4f3ef;
+  --papel: #f4f3ef;
+  --tinta: #0a0a0a;
+  --texto: #1c1c1c;
+  --suave: #6b6b6b;
+  --linha: #d4d2cc;
+  --acento: #5b5be8;
+
+  --largura-lateral: 36%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #cfcdc8;
+}
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--texto);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Página A4 ---------- */
+.pagina {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--largura-lateral) 1fr;
+  grid-template-rows: auto 1fr;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 24px auto;
+  background: var(--papel);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Linhas de grade ao fundo */
+.pagina::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* verticais */
+    linear-gradient(var(--linha), var(--linha)) 4% 0 / 1px 100% no-repeat,
+    linear-gradient(var(--linha), var(--linha)) 36% 0 / 1px 100% no-repeat,
+    linear-gradient(var(--linha), var(--linha)) 96% 0 / 1px 100% no-repeat,
+    /* horizontais */
+    linear-gradient(var(--linha), var(--linha)) 0 5.5% / 100% 1px no-repeat,
+    linear-gradient(var(--linha), var(--linha)) 0 27% / 100% 1px no-repeat,
+    linear-gradient(var(--linha), var(--linha)) 0 95% / 100% 1px no-repeat;
+}
+
+/* Retângulo de acento no canto superior direito */
+.pagina::after {
+  content: "";
+  position: absolute;
+  top: 4.6%;
+  right: 0;
+  width: 6.5%;
+  height: 2.4%;
+  background: var(--acento);
+  opacity: 0.85;
+  z-index: 0;
+}
+
+/* ---------- Colunas ---------- */
+.lateral,
+.principal {
+  position: relative;
+  z-index: 1;
+}
+
+.lateral {
+  grid-row: 1 / span 2;
+  padding: 11mm 7mm 12mm 11mm;
+  display: flex;
+  flex-direction: column;
+  gap: 8mm;
+}
+
+.principal {
+  grid-row: 1 / span 2;
+  padding: 11mm 11mm 12mm 7mm;
+  display: flex;
+  flex-direction: column;
+  gap: 7mm;
+}
+
+/* ---------- Foto com “alças” de seleção ---------- */
+.foto {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 12%;
+  background: #d8d6d0;
+  filter: grayscale(1);
+  margin-bottom: 2mm;
+  /* cantos pretos quadrados */
+  outline: 1px solid var(--tinta);
+  box-shadow:
+    -4px -4px 0 -1px var(--tinta),
+    4px -4px 0 -1px var(--tinta);
+}
+
+/* Quadrado de acento no espaço vazio da lateral esquerda */
+.lateral::before {
+  content: "";
+  position: absolute;
+  bottom: 40mm;
+  left: 0;
+  width: 19mm;
+  height: 19mm;
+  background: var(--acento);
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ---------- Títulos de seção ---------- */
+h2 {
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--tinta);
+  padding-bottom: 7px;
+  margin-bottom: 4mm;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  min-width: 34mm;
+  height: 5px;
+  background: var(--tinta);
+}
+
+.lateral section {
+  padding-bottom: 6mm;
+  border-bottom: 1px dashed var(--linha);
+}
+.lateral section:last-child {
+  border-bottom: 0;
+}
+
+/* ---------- Topo (nome + cargo + resumo) ---------- */
+.topo {
+  margin-top: 2mm;
+}
+
+h1 {
+  display: inline-block;
+  background: var(--tinta);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.15;
+  padding: 5px 14px 7px;
+  letter-spacing: 0.2px;
+}
+
+.cargo {
+  position: relative;
+  margin-top: 5mm;
+  padding-bottom: 5mm;
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--tinta);
+}
+
+.cargo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 11mm;
+  height: 3px;
+  background: var(--tinta);
+}
+
+#sec-resumo h2 {
+  display: none; /* na referência o resumo aparece sem título */
+}
+
+#resumo {
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--texto);
+  max-width: 100%;
+}
+
+/* ---------- Contatos ---------- */
+.contatos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4.5mm;
+}
+
+.contatos li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  word-break: break-word;
+}
+
+.contatos li svg,
+.contatos li i,
+.contatos li .icone,
+.contatos li img {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: var(--tinta);
+  color: var(--tinta);
+}
+
+.contatos a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Listas (habilidades, idiomas, extras) ---------- */
+.lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.lista li {
+  position: relative;
+  padding-left: 15px;
+  font-size: 10px;
+}
+
+.lista li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--tinta);
+}
+
+/* Subtítulo dentro de listas (ex.: "Habilidades técnicas") */
+.lateral h3,
+.colunas h3 {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tinta);
+  margin: 4mm 0 2mm;
+}
+
+/* ---------- Formação (lateral) ---------- */
+#formacao {
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+}
+
+#formacao .item,
+#formacao > div {
+  font-size: 10px;
+}
+
+#formacao strong,
+#formacao .titulo {
+  display: block;
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+#formacao .periodo,
+#formacao .data,
+#formacao small {
+  display: block;
+  color: var(--suave);
+  font-size: 9.5px;
+}
+
+/* ---------- Seções principais (linha tracejada entre elas) ---------- */
+.principal > section {
+  padding-top: 6mm;
+  border-top: 1px dashed var(--linha);
+}
+
+.principal > section#sec-resumo {
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* ---------- Experiência e Projetos ---------- */
+#experiencia,
+#projetos {
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+}
+
+/* Cada item: datas à esquerda, detalhes à direita */
+.exp,
+.item,
+#experiencia > div,
+#projetos > div {
+  display: grid;
+  grid-template-columns: 26mm 1fr;
+  column-gap: 5mm;
+  row-gap: 2mm;
+  align-items: start;
+}
+
+.exp .periodo,
+.item .periodo,
+.exp .data,
+.item .data {
+  grid-column: 1;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--tinta);
+}
+
+.exp .cargo-exp,
+.exp h3,
+.item h3,
+.item .titulo {
+  grid-column: 2;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--tinta);
+  margin: 0;
+}
+
+.exp .empresa,
+.item .empresa,
+.exp h4,
+.item h4 {
+  grid-column: 2;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tinta);
+  margin: 0;
+}
+
+.exp p,
+.item p {
+  grid-column: 2;
+  font-size: 10px;
+}
+
+.exp ul,
+.item ul {
+  grid-column: 2;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  margin-top: 1mm;
+}
+
+.exp ul li,
+.item ul li {
+  position: relative;
+  padding-left: 15px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.exp ul li::before,
+.item ul li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--tinta);
+}
+
+/* ---------- Habilidades em duas colunas ---------- */
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8mm;
+  padding-top: 6mm;
+  border-top: 1px dashed var(--linha);
+}
+
+.colunas section {
+  display: flex;
+  flex-direction: column;
+}
+
+.colunas h2 + .lista {
+  margin-bottom: 6mm;
+}
+
+/* ---------- Impressão ---------- */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: none;
+  }
+  .pagina {
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Telas pequenas ---------- */
+@media (max-width: 800px) {
+  body {
+    font-size: 12px;
+  }
+  .pagina {
+    width: 100%;
+    margin: 0;
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .lateral,
+  .principal {
+    grid-row: auto;
+    padding: 8mm 6mm;
+  }
+  .lateral::before,
+  .pagina::before,
+  .pagina::after {
+    display: none;
+  }
+  .foto {
+    max-width: 260px;
+  }
+  .colunas {
+    grid-template-columns: 1fr;
+  }
+  .exp,
+  .item,
+  #experiencia > div,
+  #projetos > div {
+    grid-template-columns: 1fr;
+  }
+  .exp > *,
+  .item > * {
+    grid-column: 1 !important;
+  }
+  h1 {
+    font-size: 22px;
+  }
+}
